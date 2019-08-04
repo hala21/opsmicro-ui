@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import {of, Subject} from 'rxjs';
+import {UserData} from '../../../@core/data/users';
+import {_if} from 'rxjs-compat/observable/if';
+import {NbAuthService} from '@nebular/auth';
+import {Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-header',
@@ -38,22 +41,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
-              private userService: UserData,
               private layoutService: LayoutService,
+              private userService: UserData,
+              private authService: NbAuthService,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
-    // this.userService.getUsers()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((users: any) => this.user = users.nick);
+    console.info('hello');
+    this.userService.getUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((users: any) => {
+        if (users.length === 0) {
+          console.info(this.authService.getToken());
+        } else {
+          this.user = users.nick; }});
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
