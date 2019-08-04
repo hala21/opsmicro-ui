@@ -26,16 +26,16 @@ export const YW_CORE_PROVIDERS = [
      strategies: [
        NbPasswordAuthStrategy.setup({
          name: 'email',
-         baseEndpoint: '',
+         baseEndpoint: 'https://www.ywhub.cn/api/v1',
          login: {
-           endpoint: '/api/auth/login',
+           endpoint: '/auth/login',
            redirect: {
              success: '/dashboard',
              failure: null,
            },
          },
          register: {
-           endpoint: '/api/auth/register',
+           endpoint: '/auth/register',
            redirect: {
              success: '/dashboard',
              failure: null,

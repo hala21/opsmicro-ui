@@ -3,11 +3,9 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
-import {of, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {UserData} from '../../../@core/data/users';
-import {_if} from 'rxjs-compat/observable/if';
 import {NbAuthService} from '@nebular/auth';
-import {Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-header',
